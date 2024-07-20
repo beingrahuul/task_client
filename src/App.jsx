@@ -16,11 +16,18 @@ const App = () => {
 
   useEffect(() => {
     const handleGetUser = async () => {
+      const token = localStorage.getItem('token');
       try {
         const { data } = await axios.get(
-          "http://localhost:8080/api/v1/user/me",
-          { withCredentials: true }
+          "https://task-server-cowd.onrender.com/api/v1/user/me",
+          { 
+            withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
         );
+        console.log(data)
         setIsAuthenticated(true);
         setUser(data.user);
       } catch (error) {
@@ -30,7 +37,7 @@ const App = () => {
       }
     };
     handleGetUser();
-  }, [isAuthenticated]);
+  }, []);
 
   return (
     <>

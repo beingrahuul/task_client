@@ -7,9 +7,14 @@ const ViewTaskModal = ({ showViewModal, handleViewModalClose, id }) => {
   const [task, setTask] = useState([]);
   useEffect(() => {
     const getSingleTask = async () => {
+      const token = localStorage.getItem('token');
+      console.log(token)
       await axios
-        .get(`http://localhost:8080/api/v1/task/single/${id}`, {
+        .get(`https://task-server-cowd.onrender.com/api/v1/task/single/${id}`, {
           withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
         })
         .then((res) => {
           setTask(res.data.task);

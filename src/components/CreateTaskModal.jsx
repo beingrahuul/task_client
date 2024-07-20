@@ -12,13 +12,17 @@ const CreateTaskModal = ({
   const [description, setDescription] = useState("");
 
   const handleCreateTask = async () => {
+    const token = localStorage.getItem('token');
     await axios
       .post(
-        "http://localhost:8080/api/v1/task/post",
+        "https://task-server-cowd.onrender.com/api/v1/task/post",
         { title, description },
         {
           withCredentials: true,
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          }
         }
       )
       .then((res) => {

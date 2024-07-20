@@ -14,7 +14,7 @@ function Login({ isAuthenticated, setIsAuthenticated }) {
     e.preventDefault();
     axios
       .post(
-        "http://localhost:8080/api/v1/user/login",
+        "https://task-server-cowd.onrender.com/api/v1/user/login",
         { email, password },
         {
           withCredentials: true,
@@ -25,6 +25,11 @@ function Login({ isAuthenticated, setIsAuthenticated }) {
         setEmail("");
         setPassword("");
         setIsAuthenticated(true);
+        console.log(res.data);
+        
+        //set token in local storage
+        localStorage.setItem("token", res.data.token);
+        
         toast.success(res.data.message);
       })
       .catch((error) => {

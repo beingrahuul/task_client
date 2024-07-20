@@ -24,10 +24,16 @@ function Header({
 
   // Fetch tasks from the server
   const fetchTasks = async () => {
+    const token = localStorage.getItem('token');
     try {
       const response = await axios.get(
-        "http://localhost:8080/api/v1/task/mytask",
-        { withCredentials: true }
+        "https://task-server-cowd.onrender.com/api/v1/task/mytask",
+        { 
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+         }
       );
       setAllTasks(response.data.tasks);
       setTasks(response.data.tasks); // Update tasks with fetched tasks
@@ -37,10 +43,15 @@ function Header({
   };
 
   const handleLogout = async () => {
+    const token = localStorage.getItem('token');
     try {
       const { data } = await axios.get(
-        "http://localhost:8080/api/v1/user/logout",
-        { withCredentials: true }
+        "https://task-server-cowd.onrender.com/api/v1/user/logout",
+        { withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+         }
       );
       toast.success(data.message);
       setIsAuthenticated(false);

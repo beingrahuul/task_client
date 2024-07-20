@@ -17,9 +17,13 @@ const Home = ({ isAuthenticated, tasks, setTasks, taskTitle }) => {
   const [updatedTaskId, setUpdateTaskId] = useState(null);
 
   const deleteTask = async (id) => {
+    const token = localStorage.getItem('token');
     await axios
-      .delete(`http://localhost:8080/api/v1/task/delete/${id}`, {
+      .delete(`https://task-server-cowd.onrender.com/api/v1/task/delete/${id}`, {
         withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       })
       .then((res) => {
         toast.success(res.data.message);

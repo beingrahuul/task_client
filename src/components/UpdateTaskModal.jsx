@@ -16,9 +16,13 @@ const UpdateTaskModal = ({
 
   useEffect(() => {
     const getSingleTask = async () => {
+      const token = localStorage.getItem('token');
       await axios
-        .get(`http://localhost:8080/api/v1/task/single/${id}`, {
+        .get(`https://task-server-cowd.onrender.com/api/v1/task/single/${id}`, {
           withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
         })
         .then((res) => {
           setTitle(res.data.task.title);
@@ -36,9 +40,10 @@ const UpdateTaskModal = ({
   }, [id]);
 
   const handleUpdateTask = async () => {
+    const token = localStorage.getItem('token');
     await axios
       .put(
-        `http://localhost:9000/api/v1/task/update/${id}`,
+        `https://task-server-cowd.onrender.com/api/v1/task/update/${id}`,
         {
           title,
           description,
@@ -47,7 +52,11 @@ const UpdateTaskModal = ({
         },
         {
           withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
         }
+        
       )
       .then((res) => {
         toast.success(res.data.message);

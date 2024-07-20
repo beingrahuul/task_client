@@ -24,7 +24,7 @@ function Register({ isAuthenticated, setIsAuthenticated }) {
     console.log(formData);
 
     await axios
-      .post("http://localhost:8080/api/v1/user/register", formData, {
+      .post("https://task-server-cowd.onrender.com/api/v1/user/register", formData, {
         withCredentials: true,
         headers: { "Content-Type": "multipart/form-data" },
       })
@@ -33,6 +33,7 @@ function Register({ isAuthenticated, setIsAuthenticated }) {
         setEmail("");
         setPhone("");
         setPassword("");
+        localStorage.setItem("token", res.data.token);
         setIsAuthenticated(true);
         toast.success(res.data.message);
       })
